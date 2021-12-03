@@ -32,6 +32,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'sirver/ultisnips'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'honza/vim-snippets'
+"GIT
+Plug 'tpope/vim-fugitive'
 
 "IDE
 Plug 'yggdroot/indentline'
@@ -39,4 +41,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'mhinz/vim-signify'
 call  plug#end()

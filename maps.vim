@@ -25,7 +25,7 @@ nnoremap <silent> <Leader><C-l> :TmuxNavigateRight<cr>
 
 "Faster scrolling
 
-noremap <C-j> 10<C-e> 
+nnoremap <C-j> 10<C-e> 
 nnoremap <C-k> 10<C-y>
 
 "buffer
