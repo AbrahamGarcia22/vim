@@ -5,9 +5,9 @@ nnoremap <Leader>nt :NERDTreeFind<CR>
 map <Leader>s <Plug>(easymotion-s2)
 nnoremap<Leader>p :Files<CR>
 map <Leader>ag :Ag<CR>
-
 "quick
 
+nnoremap <Leader>; A;<Esc>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 
@@ -31,6 +31,7 @@ nnoremap <C-k> 10<C-y>
 "buffer
 map <Leader>ob :Buffers<cr>
 
+xmap s <Plug>VSurround
 "Terminal
 
 set splitright
@@ -60,7 +61,8 @@ function! OpenTerminal()
     silent au BufWinEnter,WinEnter <buffer> startinsert!
 
     " set maps inside terminal buffer
-    execute "tnoremap <buffer> <C-h> <C-\\><C-n><C-w><C-h>"
+    execute "tnoremap <buffer> <Leader><C-h> <C-\\><C-n><C-w><C-h>"
+    execute "tnoremap <buffer> <Leader><C-l> <C-\\><C-n><C-w><C-l>"
     execute "tnoremap <buffer> <C-v> <C-\\><C-n>:q<CR>"
     execute "tnoremap <buffer> <C-\\><C-\\> <C-\\><C-n>"
 

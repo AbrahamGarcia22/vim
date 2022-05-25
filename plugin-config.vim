@@ -1,9 +1,6 @@
-
-
 let mapleader=" "
 let NERDTreeQuitOnOpen=1
-
-
+let g:rainbow_active = 1
 
 "ALE
 
@@ -17,6 +14,8 @@ let g:lightline.component_expand = {
       \  'linter_warnings': 'lightline#ale#warnings',
       \  'linter_errors': 'lightline#ale#errors',
       \  'linter_ok': 'lightline#ale#ok',
+      \  'gitbranch': 'gitbranch#name',
+      \  'kitestatus': 'kite#statusLine'
       \ }
 
 let g:lightline.component_type = {
@@ -32,11 +31,15 @@ let g:lightline.active = {
             \ 'right': [ ['kitestatus'], [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ],
             \            [ 'lineinfo' ],
 	    \            [ 'percent' ],
-	    \            [ 'fileformat', 'fileencoding', 'filetype'] ] }
+	    \            [ 'fileformat', 'fileencoding', 'filetype'] ],
+      \       'left': [['mode', 'paste'], [], ['relativepath', 'modified'], ['gitbranch']],}
+                    "\ ['gitbranch', 'readonly', 'filename', 'modified'] ] }
 
 " Fix files with prettier, and then ESLint.
 
-let b:ale_fixers = {'javascript': ['prettier', 'eslint']}
+let b:ale_fixers = {'javascript': ['prettier', 'eslint'], 'python': ['autoflake', 'autoimport', 'isort', 'reorder-python-imports', 'black'], 'c':['astyle'], 'php':['phpcbf']}
+let g:ale_fixers = {'*': [ 'remove_trailing_lines', 'trim_whitespace' ]}
+
 let g:ale_fix_on_save = 1
 "if has('nvim')
  " let s:user_dir = stdpath('config')
@@ -63,12 +66,17 @@ let g:ale_elixir_elixir_ls_config = {'elixirLS': {'dialyzerEnabled': v:false}}
 
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
+
 "INDENT
 
 let g:indentLine_setColors = 0
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 let php_htmlInStrings = 1
+
+"kite 
+"
+let g:kite_supported_languages = ['javascript', 'python']
 
 "COC
 
@@ -93,13 +101,18 @@ set updatetime=300
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
+autocmd FileType python let b:coc_suggest_disable = 1
+autocmd FileType javascript let b:coc_suggest_disable = 1
+autocmd FileType javascript set tabstop=2 
+autocmd FileType scss setl iskeyword+=@-@
+
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
+  set signcolumn=auto
 else
-  set signcolumn=yes
+  set signcolumn=auto
 endif
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -238,11 +251,6 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-"Aqui se desactivan los lang
-let g:kite_supported_languages = ['javascript', 'python']
-autocmd FileType python let b:coc_suggest_disable = 1
-autocmd FileType javascript let b:coc_suggest_disable = 1
-autocmd FileType scss setl iskeyword+=@-
 "Snippets
 
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -341,3 +349,10 @@ let g:mkdp_page_title = '「${name}」'
 " recognized filetypes
 " these filetypes will have MarkdownPreview... commands
 let g:mkdp_filetypes = ['markdown']
+
+" completion
+if &filetype == 'javascript' || &filetype == "python"
+      inoremap <c-space> <C-x><C-u>
+else
+      inoremap <silent><expr> <c-space> coc#refresh()
+endif

@@ -34,7 +34,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'honza/vim-snippets'
 "GIT
 Plug 'tpope/vim-fugitive'
-
+Plug 'itchyny/vim-gitbranch'
 "IDE
 Plug 'yggdroot/indentline'
 Plug 'easymotion/vim-easymotion'
@@ -43,4 +43,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mhinz/vim-signify'
+Plug 'frazrepo/vim-rainbow'
+Plug 'turbio/bracey.vim'
+Plug 'beanworks/vim-phpfmt'
 call  plug#end()
