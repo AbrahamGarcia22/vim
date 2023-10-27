@@ -1,5 +1,4 @@
 let mapleader=" "
-
 "plugs
 nnoremap <Leader>nt :NERDTreeFind<CR>
 map <Leader>s <Plug>(easymotion-s2)
@@ -10,10 +9,13 @@ map <Leader>ag :Ag<CR>
 nnoremap <Leader>; A;<Esc>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
+nnoremap <Leader>n :noh<CR>
 
+nnoremap <Leader>, a<
+nnoremap <Leader>. a>
 "Split resize
-nnoremap <Leader>> 10<C-w>>
-nnoremap <Leader>< 10<C-w><
+nnoremap <Leader><S-a> 10<C-w>>
+nnoremap <Leader><S-s> 10<C-w><
 
 
 "Tmux naviagor
@@ -25,12 +27,15 @@ nnoremap <silent> <Leader><C-l> :TmuxNavigateRight<cr>
 
 "Faster scrolling
 
-nnoremap <C-j> 10<C-e> 
+nnoremap <C-j> 10<C-e>
 nnoremap <C-k> 10<C-y>
 
 "buffer
 map <Leader>ob :Buffers<cr>
 
+"ale
+nmap <Leader>k <Plug>(ale_previous_wrap)
+nmap <Leader>j <Plug>(ale_next_wrap)
 xmap s <Plug>VSurround
 "Terminal
 

@@ -1,11 +1,9 @@
-
 call plug#begin('~/.vim/plugged')
-
 Plug 'prabirshrestha/vim-lsp'
 "Plug 'GrzegorzKozub/vim-elixirls', { 'do': ':ElixirLsCompileSync' }
 "Status Bar"
-Plug 'maximbaz/lightline-ale'
-Plug 'itchyny/lightline.vim'
+"Plug 'maximbaz/lightline-ale'
+"Plug 'itchyny/lightline.vim'
 Plug 'dense-analysis/ale'
 "Syntax
 Plug 'sheerun/vim-polyglot'
@@ -23,6 +21,9 @@ Plug 'tpope/vim-surround'
 
 "Tree
 Plug 'scrooloose/nerdtree'
+
+"Fixers
+Plug 'captbaritone/better-indent-support-for-php-with-html'
 
 
 "tmux
@@ -46,4 +47,10 @@ Plug 'mhinz/vim-signify'
 Plug 'frazrepo/vim-rainbow'
 Plug 'turbio/bracey.vim'
 Plug 'beanworks/vim-phpfmt'
+Plug 'sansyrox/vim-python-virtualenv'
+
+"Prueba de lualine
+Plug 'hoob3rt/lualine.nvim'
+" If you want to have icons in your statusline choose one of these
+Plug 'kyazdani42/nvim-web-devicons'
 call  plug#end()

@@ -1,61 +1,92 @@
-let mapleader=" "
+let mapleader=' '
 let NERDTreeQuitOnOpen=1
 let g:rainbow_active = 1
 
+lua << END
+require('lualine').setup({
+options = {
+    icons_enabled = true,
+    theme = 'gruvbox',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {},
+    always_divide_middle = true,
+    globalstatus = false,
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch'},
+    lualine_c = {
+          {'linter_checking'},
+          {'diagnostics', sources = {'ale', 'coc'}, symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}},
+          {'filename'}},
+    lualine_x = {'diff', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = {},
+})
+END
 "ALE
+"
+"let g:lightline = {}
 
-let g:lightline = {}
-
-let g:lightline.colorscheme='gruvbox'
-
-let g:lightline.component_expand = {
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_infos': 'lightline#ale#infos',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \  'gitbranch': 'gitbranch#name',
-      \  'kitestatus': 'kite#statusLine'
-      \ }
-
-let g:lightline.component_type = {
-      \     'linter_checking': 'right',
-      \     'linter_infos': 'right',
-      \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
-      \     'linter_ok': 'right',
-      \ }
+"let g:lightline.colorscheme='gruvbox'
 
 
-let g:lightline.active = {
-            \ 'right': [ ['kitestatus'], [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ],
-            \            [ 'lineinfo' ],
-	    \            [ 'percent' ],
-	    \            [ 'fileformat', 'fileencoding', 'filetype'] ],
-      \       'left': [['mode', 'paste'], [], ['relativepath', 'modified'], ['gitbranch']],}
-                    "\ ['gitbranch', 'readonly', 'filename', 'modified'] ] }
+"let g:lightline.component_expand = {
+      "\  'linter_checking': 'lightline#ale#checking',
+      "\  'linter_infos': 'lightline#ale#infos',
+      "\  'linter_warnings': 'lightline#ale#warnings',
+      "\  'linter_errors': 'lightline#ale#errors',
+      "\  'linter_ok': 'lightline#ale#ok',
+      "\  'gitbranch': 'gitbranch#name',
+      "\  'kitestatus': 'kite#statusLine'
+      "\ }
+
+"let g:lightline.component_type = {
+      "\     'linter_checking': 'right',
+      "\     'linter_infos': 'right',
+      "\     'linter_warnings': 'warning',
+      "\     'linter_errors': 'error',
+      "\     'linter_ok': 'right',
+      "\ }
+
+
+"let g:lightline.active = {
+            "\ 'right': [ ['kitestatus'], [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ],
+            "\            [ 'lineinfo' ],
+			"\            [ 'percent' ],
+			"\            [ 'fileformat', 'fileencoding', 'filetype'] ],
+      "\       'left': [['mode', 'paste'], [], ['relativepath', 'modified'], ['gitbranch']],}
+                    ""\ ['gitbranch', 'readonly', 'filename', 'modified'] ] }
 
 " Fix files with prettier, and then ESLint.
-
-let b:ale_fixers = {'javascript': ['prettier', 'eslint'], 'python': ['autoflake', 'autoimport', 'isort', 'reorder-python-imports', 'black'], 'c':['astyle'], 'php':['phpcbf']}
-let g:ale_fixers = {'*': [ 'remove_trailing_lines', 'trim_whitespace' ]}
-
+let g:ale_virtualtext_cursor = 0
+let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'python': ['autoflake', 'autoimport', 'isort', 'black'], 'c':['astyle'], 'php':['pint'], '*': [ 'remove_trailing_lines', 'trim_whitespace' ], 'elixir': ['mix_format'],}
+"let g:ale_fixers = {}
+"let g:ale_virtualenv_dir_names = []
 let g:ale_fix_on_save = 1
 "if has('nvim')
  " let s:user_dir = stdpath('config')
 "else
  " let s:user_dir = has('win32') ? expand('~/vimfiles') : expand('~/.vim')
 "endif
-
 "let g:ale_elixir_elixir_ls_release = s:user_dir . '/plugged/vim-elixirls/elixir-ls'
 let g:tmux_navigator_no_mappings = 1
 
 let g:ale_linters = {
 \   'elixir': ['elixir-ls'],
-\}
-
-let g:ale_fixers = {
-\   'elixir': ['mix_format'],
+\   'python': ['flake8', 'pylint'],
 \}
 
 " Required, tell ALE where to find Elixir LS
@@ -64,8 +95,13 @@ let g:ale_elixir_elixir_ls_release = expand("~/elixir-ls/release")
 " Optional, you can disable Dialyzer with this setting
 let g:ale_elixir_elixir_ls_config = {'elixirLS': {'dialyzerEnabled': v:false}}
 
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = '⚠'
+"let g:ale_python_pylint_options = {'disable': 'import-error,invalid-name,duplicate-code'}
+
+let g:ale_python_pylint_options = '--disable=missing-module-docstring,missing-function-docstring,missing-class-docstring,line-too-long,import-error'
+let g:ale_sign_error = ' '
+let g:ale_sign_warning = ' '
+let g:ale_sign_info = ' '
+let g:ale_sign_hint = ' '
 
 "INDENT
 
@@ -74,14 +110,15 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 let php_htmlInStrings = 1
 
-"kite 
+"kite
 "
-let g:kite_supported_languages = ['javascript', 'python']
+"let g:kite_supported_languages = ['javascript', 'python']
 
 "COC
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
+"
 set encoding=utf-8
 
 " TextEdit might fail if hidden is not set.
@@ -101,9 +138,9 @@ set updatetime=300
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-autocmd FileType python let b:coc_suggest_disable = 1
-autocmd FileType javascript let b:coc_suggest_disable = 1
-autocmd FileType javascript set tabstop=2 
+"autocmd FileType python let b:coc_suggest_disable = 1
+"autocmd FileType javascript let b:coc_suggest_disable = 1
+autocmd FileType javascript set tabstop=2
 autocmd FileType scss setl iskeyword+=@-@
 
 " Always show the signcolumn, otherwise it would shift the text each time
@@ -118,16 +155,19 @@ endif
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction
+
+  " Insert <tab> when previous text is space, refresh completion if not.
+  inoremap <silent><expr> <TAB>
+	\ coc#pum#visible() ? coc#pum#next(1):
+	\ <SID>check_back_space() ? "\<Tab>" :
+	\ coc#refresh()
+  inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -138,10 +178,10 @@ endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
+				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Use `[g` and `]g` to navigate diagnostics
+"Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -253,9 +293,10 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 "Snippets
 
-let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+let g:UltiSnipsExpandTrigger="<nop>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
