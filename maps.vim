@@ -1,4 +1,4 @@
-let mapleader=" "
+let mapleader=' '
 "plugs
 nnoremap <Leader>nt :NERDTreeFind<CR>
 map <Leader>s <Plug>(easymotion-s2)

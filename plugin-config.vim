@@ -90,7 +90,7 @@ let g:ale_linters = {
 \}
 
 " Required, tell ALE where to find Elixir LS
-let g:ale_elixir_elixir_ls_release = expand("~/elixir-ls/release")
+let g:ale_elixir_elixir_ls_release = expand('~/elixir-ls/release')
 
 " Optional, you can disable Dialyzer with this setting
 let g:ale_elixir_elixir_ls_config = {'elixirLS': {'dialyzerEnabled': v:false}}
@@ -145,7 +145,7 @@ autocmd FileType scss setl iskeyword+=@-@
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
+if has('nvim-0.5.0') || has('patch-8.1.1564')
   " Recently vim can merge signcolumn and number column into one
   set signcolumn=auto
 else
@@ -201,7 +201,7 @@ function! s:show_documentation()
   elseif (coc#rpc#ready())
     call CocActionAsync('doHover')
   else
-    execute '!' . &keywordprg . " " . expand('<cword>')
+    execute '!' . &keywordprg . ' ' . expand('<cword>')
   endif
 endfunction
 
@@ -294,12 +294,12 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 "Snippets
 
 "let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-let g:UltiSnipsExpandTrigger="<nop>"
+let g:UltiSnipsJumpForwardTrigger='<tab>'
+let g:UltiSnipsJumpBackwardTrigger='<S-tab>'
+let g:UltiSnipsExpandTrigger='<nop>'
 
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit='vertical'
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
 let g:mkdp_auto_start = 0
@@ -392,7 +392,7 @@ let g:mkdp_page_title = '「${name}」'
 let g:mkdp_filetypes = ['markdown']
 
 " completion
-if &filetype == 'javascript' || &filetype == "python"
+if &filetype == 'javascript' || &filetype == 'python'
       inoremap <c-space> <C-x><C-u>
 else
       inoremap <silent><expr> <c-space> coc#refresh()
