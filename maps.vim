@@ -5,6 +5,7 @@ map <Leader>s <Plug>(easymotion-s2)
 nnoremap<Leader>p :Files<CR>
 map <Leader>ag :Ag<CR>
 "quick
+nnoremap <Leader>r :NERDTreeRefreshRoot<CR>
 
 nnoremap <Leader>; A;<Esc>
 nnoremap <Leader>w :w<CR>
@@ -50,7 +51,7 @@ function! OpenTerminal()
   let bufNum = bufnr("%")
   let bufType = getbufvar(bufNum, "&buftype", "not found")
 
-  if bufType == "terminal"
+  if bufType ==# "terminal"
     " close existing terminal
     execute "q"
   else

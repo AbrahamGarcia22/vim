@@ -12,6 +12,7 @@ Plug 'wlangstroth/vim-racket'
 "Themes
 Plug 'morhetz/gruvbox'
 Plug 'shinchu/lightline-gruvbox.vim'
+Plug 'sainnhe/gruvbox-material'
 
 "typing
 Plug 'jiangmiao/auto-pairs'
@@ -43,13 +44,12 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'mhinz/vim-signify'
+"Plug 'mhinz/vim-signify'
 Plug 'frazrepo/vim-rainbow'
 Plug 'turbio/bracey.vim'
 Plug 'beanworks/vim-phpfmt'
 Plug 'sansyrox/vim-python-virtualenv'
-
-"Prueba de lualine
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'hoob3rt/lualine.nvim'
 " If you want to have icons in your statusline choose one of these
 Plug 'kyazdani42/nvim-web-devicons'

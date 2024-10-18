@@ -1,12 +1,11 @@
 let mapleader=' '
 let NERDTreeQuitOnOpen=1
 let g:rainbow_active = 1
-
 lua << END
 require('lualine').setup({
 options = {
     icons_enabled = true,
-    theme = 'gruvbox',
+    theme = 'auto',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {},
@@ -36,6 +35,7 @@ options = {
   extensions = {},
 })
 END
+
 "ALE
 "
 "let g:lightline = {}
@@ -72,7 +72,7 @@ END
 
 " Fix files with prettier, and then ESLint.
 let g:ale_virtualtext_cursor = 0
-let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'python': ['autoflake', 'autoimport', 'isort', 'black'], 'c':['astyle'], 'php':['pint'], '*': [ 'remove_trailing_lines', 'trim_whitespace' ], 'elixir': ['mix_format'],}
+let g:ale_fixers = {'javascript': ['eslint'],'typescript':['eslint']  ,'python': ['autoflake', 'autoimport', 'isort', 'black'], 'c':['astyle'], 'php':['pint'], '*': [ 'remove_trailing_lines', 'trim_whitespace' ], 'elixir': ['mix_format'],}
 "let g:ale_fixers = {}
 "let g:ale_virtualenv_dir_names = []
 let g:ale_fix_on_save = 1
@@ -86,7 +86,9 @@ let g:tmux_navigator_no_mappings = 1
 
 let g:ale_linters = {
 \   'elixir': ['elixir-ls'],
-\   'python': ['flake8', 'pylint'],
+\   'python': ['pylint', 'flake8'],
+\   'typescript': ['tsserver'],
+\   'javascript': ['tsserver'],
 \}
 
 " Required, tell ALE where to find Elixir LS
@@ -95,13 +97,18 @@ let g:ale_elixir_elixir_ls_release = expand('~/elixir-ls/release')
 " Optional, you can disable Dialyzer with this setting
 let g:ale_elixir_elixir_ls_config = {'elixirLS': {'dialyzerEnabled': v:false}}
 
+
 "let g:ale_python_pylint_options = {'disable': 'import-error,invalid-name,duplicate-code'}
 
-let g:ale_python_pylint_options = '--disable=missing-module-docstring,missing-function-docstring,missing-class-docstring,line-too-long,import-error'
+let g:ale_python_pylint_options = '--disable=missing-module-docstring,missing-function-docstring,missing-class-docstring,line-too-long,import-error,wrong-import-order,too-few-public-methods'
 let g:ale_sign_error = ' '
+let g:ale_sign_style_error = ' '
 let g:ale_sign_warning = ' '
+let g:ale_sign_style_warning = ' '
+let g:ale_sign_style_info = ' '
 let g:ale_sign_info = ' '
 let g:ale_sign_hint = ' '
+let g:ale_echo_msg_format = "(%linter%) %code: %%s"
 
 "INDENT
 
@@ -156,18 +163,19 @@ endif
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-  endfunction
+" use <tab> to trigger completion and navigate to the next complete item
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-  " Insert <tab> when previous text is space, refresh completion if not.
-  inoremap <silent><expr> <TAB>
-	\ coc#pum#visible() ? coc#pum#next(1):
-	\ <SID>check_back_space() ? "\<Tab>" :
-	\ coc#refresh()
-  inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
 
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -391,9 +399,11 @@ let g:mkdp_page_title = '「${name}」'
 " these filetypes will have MarkdownPreview... commands
 let g:mkdp_filetypes = ['markdown']
 
-" completion
-if &filetype == 'javascript' || &filetype == 'python'
-      inoremap <c-space> <C-x><C-u>
-else
-      inoremap <silent><expr> <c-space> coc#refresh()
-endif
+au FileType yaml if bufname("%") =~# "docker-compose.yml" | set ft=yaml.docker-compose | endif
+au FileType yaml if bufname("%") =~# "compose.yml" | set ft=yaml.docker-compose | endif
+
+let g:coc_filetype_map = {
+  \ 'yaml.docker-compose': 'dockercompose',
+  \ }
+
+let g:AutoPairsMapCR=0
